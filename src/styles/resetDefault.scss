@@ -1,0 +1,27 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  display: flex;
+}
+
+ul {
+  list-style: none;
+  li {
+    display: block;
+  }
+}
+
+button {
+  display: block;
+}

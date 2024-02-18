@@ -1,0 +1,10 @@
+@import 'fonts';
+@import 'scssHelpers';
+@import 'resetDefault';
+@import 'defaultColor';
+
+body {
+  color: var(--th_main_text);
+  font-family: SF Pro Display Regular;
+  font-weight: 400;
+}
