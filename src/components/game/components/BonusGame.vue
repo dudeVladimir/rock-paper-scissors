@@ -1,11 +1,7 @@
 <template>
   <div class="bonus-game">
     <ul class="bonus-game__content">
-      <img
-        :src="getUrlToImg('../assets/svg/bg-pentagon.svg')"
-        alt="background"
-        height="330px"
-      />
+      <img src="/bg-pentagon.svg" alt="background" height="330px" />
       <li
         v-for="(button, index) in buttonsArr"
         :key="index"
@@ -19,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { getUrlToImg } from '@/helpers';
 import GameButton from './GameButton.vue';
 import { GameItems } from '../types';
 

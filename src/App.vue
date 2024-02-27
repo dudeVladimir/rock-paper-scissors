@@ -19,7 +19,6 @@
           @set-result="setResult"
         />
       </transition>
-      <!-- <DemoPage class="demo-component my-4" /> -->
     </main>
     <footer class="app-footer">
       <div class="buttons">
@@ -33,9 +32,6 @@
           @click="ruleHandler(true)"
           >Правила</TheButton
         >
-        <!-- <TheButton uppercase font-size="16px" @click="buttonHandler"
-          >Сброс</TheButton
-        > -->
       </div>
     </footer>
   </div>
@@ -50,7 +46,6 @@ import TheHeader from './components/TheHeader.vue';
 import TheButton from './components/ui-kit/TheButton.vue';
 import TheGame from './components/game/TheGame.vue';
 import RuleView from './components/game/components/RuleView.vue';
-// import DemoPage from './layouts/DemoPage.vue';
 
 const isBonusGame = ref<boolean>(false);
 const isRuleView = ref<boolean>(false);
@@ -83,7 +78,6 @@ const getLocalStorageResult = (): void => {
 
   if (Number.isFinite(valueToNum)) {
     counter.value = valueToNum;
-    console.log(valueToNum);
   }
 };
 

@@ -20,14 +20,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getUrlToImg } from '../helpers';
 
 const props = defineProps<{ isBonusGame?: boolean; counter?: number }>();
 
 const svgUrl = computed(() =>
-  props.isBonusGame
-    ? getUrlToImg('../assets/svg/logo-bonus.svg')
-    : getUrlToImg('../assets/svg/logo.svg'),
+  props.isBonusGame ? './logo-bonus.svg' : './logo.svg',
 );
 
 const svgAlt = computed(() =>

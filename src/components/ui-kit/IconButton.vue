@@ -2,7 +2,7 @@
   <button class="icon-button">
     <img
       class="icon-button__img"
-      :src="getUrlToImg(url)"
+      :src="url"
       :alt="url ?? alt ?? 'Что-то пошло не так'"
       :width="width"
       :height="height"
@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { getUrlToImg } from '@/helpers';
-
 interface Props {
   url: string;
   alt?: string | null;

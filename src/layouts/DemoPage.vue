@@ -21,7 +21,7 @@
 import { computed } from 'vue';
 import { isObject } from '../helpers';
 
-const svgFiles = import.meta.glob('../assets/svg/*.svg');
+const svgFiles = import.meta.glob('./*.svg');
 
 const svgUrls = computed(() => {
   if (isObject(svgFiles)) {

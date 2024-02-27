@@ -6,10 +6,7 @@
           {{ headerText }}
         </div>
         <div class="rule-header__append">
-          <IconButton
-            url="../assets/svg/icon-close.svg"
-            @click="$emits('close')"
-          />
+          <IconButton url="./icon-close.svg" @click="$emits('close')" />
         </div>
       </div>
       <div class="rule-body">
@@ -26,7 +23,6 @@
 
 <script setup lang="ts">
 import IconButton from '@/components/ui-kit/IconButton.vue';
-import { getUrlToImg } from '@/helpers';
 import { computed } from 'vue';
 
 const props = defineProps<{ isBonusGame?: boolean }>();
@@ -40,9 +36,7 @@ const headerText = computed<string>(() =>
 );
 
 const imgUrl = computed<string>(() =>
-  props.isBonusGame
-    ? getUrlToImg('../assets/svg/image-rules-bonus.svg')
-    : getUrlToImg('../assets/svg/image-rules.svg'),
+  props.isBonusGame ? './image-rules-bonus.svg' : './image-rules.svg',
 );
 </script>
 

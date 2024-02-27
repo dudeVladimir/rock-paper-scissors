@@ -8,7 +8,7 @@
     <img
       class="game-button__img"
       :class="`game-button__img_${itemName}`"
-      :src="getUrlToImg(`../assets/svg/icon-${itemName}.svg`)"
+      :src="`./icon-${itemName}.svg`"
       :alt="itemName ?? 'something went wrong'"
       height="67px"
       width="67px"
@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { getUrlToImg } from '@/helpers';
 import { computed, CSSProperties } from 'vue';
 
 const props = defineProps<{
