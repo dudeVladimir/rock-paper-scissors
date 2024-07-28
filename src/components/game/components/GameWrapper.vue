@@ -6,7 +6,11 @@
       :class="{ 'bonus-game': isBonusGame }"
     >
         <ul class="game-wrapper__content">
-          <img :src="imgSrc" alt="background" height="330px" />
+          <img
+            :src="isBonusGame ? 'bg-pentagon.svg' : 'bg-triangle.svg'"
+            alt="background"
+            height="330px"
+          />
           <li
             v-for="(button, index) in buttonsArr"
             :key="index"
@@ -29,12 +33,6 @@ import GAME_CONSTANTS from '../constants';
 const isBonusGame = inject('isBonusGame') as Ref;
 
 const buttonsArr = computed<GameItem[]>(() => isBonusGame.value ? GAME_CONSTANTS.GAME_ITEMS_ARRAY : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY);
-
-const imgSrc = computed<string>(() => {
-  if (isBonusGame.value) return '/bg-pentagon.svg';
-
-  return '/bg-triangle.svg';
-});
 
 const $emits = defineEmits<{
   selectItem: [name: GameItem];
