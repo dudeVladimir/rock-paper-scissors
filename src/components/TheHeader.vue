@@ -3,7 +3,14 @@
     <div class="header-content">
       <div class="header-content__left">
         <div class="logo-container">
-          <img :src="svgUrl" :alt="svgAlt" height="114px" />
+          <transition name="scale-zero">
+            <img
+              :key="`${svgUrl}-${svgAlt}`"
+              :src="svgUrl"
+              :alt="svgAlt"
+              height="114px"
+            />
+          </transition>
         </div>
       </div>
       <div class="header-content__rigth">
@@ -19,22 +26,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { type Ref, computed, inject } from 'vue';
 
-const props = defineProps<{ isBonusGame?: boolean; counter?: number }>();
+defineProps<{ counter?: number }>();
+
+const isBonusGame = inject('isBonusGame') as Ref;
 
 const svgUrl = computed(() =>
-  props.isBonusGame ? './logo-bonus.svg' : './logo.svg',
+  isBonusGame.value ? './logo-bonus.svg' : './logo.svg',
 );
 
 const svgAlt = computed(() =>
-  props.isBonusGame
+  isBonusGame.value
     ? 'rock-paper-scissors-lizard-spock'
     : 'rock-paper-scissors',
 );
 </script>
 
 <style lang="scss" scoped>
+$mobile-br: '439px';
+
 .header-container {
   .header-content {
     display: flex;
@@ -44,7 +55,19 @@ const svgAlt = computed(() =>
     padding: 15px 19px;
     border: 1px solid var(--th_secondary_background);
     border-radius: 6px;
+    @media (max-width: $mobile-br) {
+      flex-direction: column;
+    }
+    &__left {
+      .logo-container {
+        position: relative;
+        height: 114px;
+      }
+    }
     &__rigth {
+      @media (max-width: $mobile-br) {
+        width: 100%;
+      }
       .counter {
         width: 160px;
         text-align: center;
@@ -52,6 +75,9 @@ const svgAlt = computed(() =>
         height: 100%;
         padding: 8px;
         border-radius: 8px;
+        @media (max-width: $mobile-br) {
+          width: auto;
+        }
         &__header {
           text-transform: uppercase;
           color: var(--th_primary);
@@ -61,19 +87,6 @@ const svgAlt = computed(() =>
           text-wrap: nowrap;
           text-overflow: ellipsis;
           color: var(--th_main_background);
-        }
-      }
-    }
-  }
-}
-@media (max-width: 439px) {
-  .header-container {
-    .header-content {
-      flex-direction: column;
-      &__rigth {
-        width: 100%;
-        .counter {
-          width: auto;
         }
       }
     }

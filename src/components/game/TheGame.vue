@@ -4,14 +4,17 @@
       class="the-game__content"
       :class="{ 'result-component': resultOfGame.gameResult != null }"
     >
-      <transition :name="animationName">
-        <component
-          :is="gameComponent"
+      <transition name="scale-zero">
+        <ResultView
+          v-if="isResultView"
           class="game-component"
-          :buttons-arr="buttonsArr"
           :result-of-game="resultOfGame"
-          @select-item="selectItem"
           @reset-game="resetGame"
+        />
+        <GameWrapper
+          v-else
+          class="game-component"
+          @select-item="selectItem"
         />
       </transition>
     </div>
@@ -19,21 +22,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, inject, type Ref } from 'vue';
 import { generateRandomNumber } from '@/helpers';
 
 import { whatIsResult } from './helpers';
-import { GameItems, ResultOfGame, ResultVariant } from './types';
+import { GameItem, ResultOfGame, type Result } from './types';
 import GAME_CONSTANTS from './constants';
 
-import DefaultGame from './components/DefaultGame.vue';
-import BonusGame from './components/BonusGame.vue';
+import GameWrapper from './components/GameWrapper.vue';
 import ResultView from './components/ResultView.vue';
 
-const props = defineProps<{ isBonusGame?: boolean }>();
+const isBonusGame = inject('isBonusGame') as Ref;
 
 const $emits = defineEmits<{
-  setResult: [resutlt: ResultVariant];
+  setResult: [result: Result];
 }>();
 
 const resultOfGame = ref<ResultOfGame>({
@@ -48,33 +50,11 @@ const isResultView = computed<boolean>(() => {
   return true;
 });
 
-const gameComponent = computed(() => {
-  if (isResultView.value) return ResultView;
+const selectItem = (userChoice: GameItem) => {
+  const usedArr = isBonusGame.value ? GAME_CONSTANTS.GAME_ITEMS_ARRAY : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY;
 
-  return props.isBonusGame ? BonusGame : DefaultGame;
-});
-
-const animationName = computed(() => {
-  if (isResultView.value) return 'result';
-
-  return props.isBonusGame ? 'game-changer' : 'revert-game-changer';
-});
-
-const buttonsArr = computed<GameItems[]>(() => {
-  if (props.isBonusGame) {
-    return GAME_CONSTANTS.GAME_ITEMS_ARRAY;
-  }
-
-  const notIncludesItems = ['lizard', 'spock'];
-
-  return GAME_CONSTANTS.GAME_ITEMS_ARRAY.filter(
-    (e) => !notIncludesItems.includes(e),
-  );
-});
-
-const selectItem = (userChoice: GameItems): undefined => {
   const robotChoice =
-    buttonsArr.value[generateRandomNumber(0, buttonsArr.value.length)];
+  usedArr[generateRandomNumber(0, usedArr.length)];
 
   const gameResult = whatIsResult(userChoice, robotChoice);
 
@@ -95,9 +75,8 @@ const resetGame = (): void => {
   };
 };
 
-watch(
-  () => props.isBonusGame,
-  (): void => {
+watch(isBonusGame, (): void => {
+    console.log('test');
     resetGame();
   },
 );
@@ -111,58 +90,14 @@ watch(
     justify-content: center;
     height: 400px;
     position: relative;
+    &:not(.result-component) {
+      @media (max-width: 440px) {
+        transform: scale(0.8);
+      }
+    }
     .game-component {
       position: absolute;
     }
   }
-}
-
-@media (max-width: 440px) {
-  .the-game {
-    &__content {
-      &:not(.result-component) {
-        transform: scale(0.8);
-      }
-    }
-  }
-}
-
-.revert-game-changer-enter-active,
-.revert-game-changer-leave-active,
-.game-changer-enter-active,
-.game-changer-leave-active {
-  transition: all 0.7s ease;
-  position: absolute;
-}
-
-.revert-game-changer-leave-to,
-.game-changer-enter-from {
-  opacity: 0;
-  transform: translateX(150%) scale(0.8);
-}
-
-.revert-game-changer-enter-to,
-.revert-game-changer-leave-from,
-.game-changer-enter-to,
-.game-changer-leave-from {
-  transform: translateX(0px);
-}
-
-.revert-game-changer-enter-from,
-.game-changer-leave-to {
-  opacity: 0;
-  transform: translateX(-150%) scale(0.8);
-}
-
-.result-enter-active,
-.result-leave-active {
-  transition: all 0.5s ease;
-  position: absolute;
-}
-
-.result-leave-to,
-.result-enter-from {
-  transform: scale(0);
-  opacity: 0;
 }
 </style>

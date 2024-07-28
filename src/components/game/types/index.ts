@@ -1,9 +1,19 @@
-export type GameItems = 'rock' | 'paper' | 'scissors' | 'lizard' | 'spock';
+export enum GameItem {
+  Rock = 'rock',
+  Paper = 'paper',
+  Scissors = 'scissors',
+  Lizard = 'lizard',
+  Spock = 'spock',
+};
 
-export type ResultVariant = -1 | 0 | 1;
+export enum Result {
+  Loss = -1,
+  Draw,
+  Win,
+};
 
 export interface ResultOfGame {
-  gameResult: ResultVariant | null;
-  userChoice: GameItems | null;
-  robotChoice: GameItems | null;
+  gameResult: Result | null;
+  userChoice: GameItem | null;
+  robotChoice: GameItem | null;
 }

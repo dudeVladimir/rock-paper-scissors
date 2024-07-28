@@ -2,19 +2,16 @@
   <div class="app-container">
     <TheHeader
       class="app-header"
-      :is-bonus-game="isBonusGame"
       :counter="counter"
     />
     <main class="app-content">
-      <transition name="fade">
+      <transition name="scale-zero">
         <RuleView
           v-if="isRuleView"
-          :is-bonus-game="isBonusGame"
           @close="ruleHandler(false)"
         />
         <TheGame
           v-else
-          :is-bonus-game="isBonusGame"
           class="game-container"
           @set-result="setResult"
         />
@@ -38,9 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 
-import { ResultVariant } from './components/game/types';
+import type { Result } from './components/game/types';
 
 import TheHeader from './components/TheHeader.vue';
 import TheButton from './components/ui-kit/TheButton.vue';
@@ -49,6 +46,8 @@ import RuleView from './components/game/components/RuleView.vue';
 
 const isBonusGame = ref<boolean>(false);
 const isRuleView = ref<boolean>(false);
+
+provide('isBonusGame', isBonusGame);
 
 const bonusHandler = () => {
   isBonusGame.value = !isBonusGame.value;
@@ -62,7 +61,7 @@ const setResultToLocalStorage = (v: number): void => {
   }
 };
 
-const setResult = (result: ResultVariant): void => {
+const setResult = (result: Result): void => {
   if (Number.isFinite(result) && result != null) {
     counter.value = counter.value + result;
 
@@ -96,12 +95,12 @@ getLocalStorageResult();
   background: radial-gradient(rgba(2, 0, 36, 0.85), var(--th_main_background));
   min-height: 100%;
   width: 100%;
+  padding: 0 20px;
   .app-header,
   .app-content {
     max-width: 920px;
     margin: 0 auto;
     width: 100%;
-    padding: 0 20px;
   }
   .app-header {
     margin-top: 20px;
@@ -116,7 +115,6 @@ getLocalStorageResult();
   }
   .app-footer {
     flex: 0 0 200px;
-    padding: 20px;
     .buttons {
       width: 120px;
       height: 100%;
@@ -126,29 +124,5 @@ getLocalStorageResult();
       float: right;
     }
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s ease;
-  width: calc(100% - 40px);
-  margin: 0 auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.fade-leave-to,
-.fade-enter-from {
-  transform: scale(0);
-  opacity: 0;
-}
-
-.fade-leave-from,
-.fade-enter-to {
-  transform: scale(1);
-  opacity: 1;
 }
 </style>

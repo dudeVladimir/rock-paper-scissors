@@ -23,20 +23,20 @@
 
 <script setup lang="ts">
 import IconButton from '@/components/ui-kit/IconButton.vue';
-import { computed } from 'vue';
+import { type Ref, computed, inject } from 'vue';
 
-const props = defineProps<{ isBonusGame?: boolean }>();
+const isBonusGame = inject('isBonusGame') as Ref;
 
 const $emits = defineEmits<{
   close: [];
 }>();
 
 const headerText = computed<string>(() =>
-  props.isBonusGame ? 'Правила бонусной игры' : 'Правила',
+  isBonusGame.value ? 'Правила бонусной игры' : 'Правила',
 );
 
 const imgUrl = computed<string>(() =>
-  props.isBonusGame ? './image-rules-bonus.svg' : './image-rules.svg',
+  isBonusGame.value ? './image-rules-bonus.svg' : './image-rules.svg',
 );
 </script>
 

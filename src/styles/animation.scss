@@ -1,0 +1,42 @@
+.revert-translate-x-enter-active,
+.revert-translate-x-leave-active,
+.translate-x-enter-active,
+.translate-x-leave-active {
+  transition: all 0.6s ease;
+  position: absolute;
+}
+
+.translate-x-enter-from,
+.revert-translate-x-leave-to {
+  opacity: 0;
+  transform: translateX(-150%) scale(0.8);
+}
+
+.revert-translate-x-enter-to,
+.revert-translate-x-leave-from,
+.translate-x-enter-to,
+.translate-x-leave-from {
+  transform: translateX(0px);
+}
+
+.revert-translate-x-enter-from,
+.translate-x-leave-to {
+  opacity: 0;
+  transform: translateX(150%) scale(0.8);
+}
+
+.scale-zero-enter-active,
+.scale-zero-leave-active {
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.scale-zero-leave-to,
+.scale-zero-enter-from {
+  transform: scale(0);
+  opacity: 0;
+}

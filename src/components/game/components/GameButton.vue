@@ -18,9 +18,10 @@
 
 <script setup lang="ts">
 import { computed, CSSProperties } from 'vue';
+import { GameItem } from '../types';
 
 const props = defineProps<{
-  itemName: string | null;
+  itemName: GameItem | null;
   disabled?: boolean;
 }>();
 
@@ -28,16 +29,16 @@ const styleObject = computed(() => {
   let borderColor = 'th_primary';
 
   switch (props.itemName) {
-    case 'scissors':
+    case GameItem.Scissors:
       borderColor = '#EC9E0E';
       break;
-    case 'rock':
+    case GameItem.Rock:
       borderColor = '#DC2E4E';
       break;
-    case 'lizard':
+    case GameItem.Lizard:
       borderColor = '#81A85D';
       break;
-    case 'spock':
+    case GameItem.Spock:
       borderColor = '#FF5733';
       break;
     default:

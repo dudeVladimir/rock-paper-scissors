@@ -1,27 +1,27 @@
-import { GameItems, ResultVariant } from '../types';
+import { GameItem, Result } from '../types';
 
 const itemWinsScheme = {
-  rock: ['scissors', 'lizard'],
-  paper: ['rock', 'spock'],
-  scissors: ['paper', 'lizard'],
-  lizard: ['spock', 'paper'],
-  spock: ['scissors', 'rock'],
+  rock: [GameItem.Scissors, GameItem.Lizard],
+  paper: [GameItem.Rock, GameItem.Spock],
+  scissors: [GameItem.Paper, GameItem.Lizard],
+  lizard: [GameItem.Spock, GameItem.Paper],
+  spock: [GameItem.Scissors, GameItem.Rock],
 };
 
 function whatIsResult(
-  userSelectedName: GameItems,
-  robotSelectedName: GameItems,
-): ResultVariant {
-  if (userSelectedName === robotSelectedName) return 0;
+  userSelectedName: GameItem,
+  robotSelectedName: GameItem,
+): Result {
+  if (userSelectedName === robotSelectedName) return Result.Draw;
 
   const isUserWins =
     itemWinsScheme[userSelectedName].includes(robotSelectedName);
   const isRobotWins =
     itemWinsScheme[robotSelectedName].includes(userSelectedName);
 
-  if (isUserWins && !isRobotWins) return 1;
+  if (isUserWins && !isRobotWins) return Result.Win;
 
-  if (isRobotWins && !isUserWins) return -1;
+  if (isRobotWins && !isUserWins) return Result.Loss;
 
   return 0;
 }
