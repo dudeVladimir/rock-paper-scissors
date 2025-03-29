@@ -1,9 +1,6 @@
-import {
-  type UserConfig,
-  defineConfig,
-} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { fileURLToPath } from 'url';
+import { defineConfig, type UserConfig } from 'vite';
 
 function createViteConfig({ mode }: UserConfig): UserConfig {
   const isDev = mode === 'development';
