@@ -67,8 +67,12 @@ const resultText = computed(() => {
   const { gameResult } = props.resultOfGame;
 
   const errorText = 'Что-то пошло не так';
+  if (!Number.isFinite(gameResult) || gameResult === null) {
+    // If gameResult is not a valid number or null, return the error text
+    return errorText;
+  }
 
-  const text = gameResult ? resultTextMap[gameResult] : null;
+  const text = resultTextMap[gameResult];
 
   return text ?? errorText;
 });
