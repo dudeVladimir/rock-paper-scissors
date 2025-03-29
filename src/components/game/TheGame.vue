@@ -11,11 +11,7 @@
           :result-of-game="resultOfGame"
           @reset-game="resetGame"
         />
-        <GameWrapper
-          v-else
-          class="game-component"
-          @select-item="selectItem"
-        />
+        <GameWrapper v-else class="game-component" @select-item="selectItem" />
       </transition>
     </div>
   </div>
@@ -32,7 +28,7 @@ import GAME_CONSTANTS from './constants';
 import GameWrapper from './components/GameWrapper.vue';
 import ResultView from './components/ResultView.vue';
 
-const isBonusGame = inject('isBonusGame') as Ref;
+const isBonusGame = inject('isBonusGame') as Ref<boolean>;
 
 const $emits = defineEmits<{
   setResult: [result: Result];
@@ -51,10 +47,11 @@ const isResultView = computed<boolean>(() => {
 });
 
 const selectItem = (userChoice: GameItem) => {
-  const usedArr = isBonusGame.value ? GAME_CONSTANTS.GAME_ITEMS_ARRAY : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY;
+  const usedArr = isBonusGame.value
+    ? GAME_CONSTANTS.GAME_ITEMS_ARRAY
+    : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY;
 
-  const robotChoice =
-  usedArr[generateRandomNumber(0, usedArr.length)];
+  const robotChoice = usedArr[generateRandomNumber(0, usedArr.length)];
 
   const gameResult = whatIsResult(userChoice, robotChoice);
 
@@ -75,11 +72,9 @@ const resetGame = (): void => {
   };
 };
 
-watch(isBonusGame, (): void => {
-    console.log('test');
-    resetGame();
-  },
-);
+watch(isBonusGame, () => {
+  resetGame();
+});
 </script>
 
 <style lang="scss" scoped>

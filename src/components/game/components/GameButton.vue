@@ -25,24 +25,20 @@ const props = defineProps<{
   disabled?: boolean;
 }>();
 
+const colorMap = {
+  [GameItem.Scissors]: '#EC9E0E',
+  [GameItem.Rock]: '#DC2E4E',
+  [GameItem.Lizard]: '#81A85D',
+  [GameItem.Spock]: '#FF5733',
+  [GameItem.Paper]: 'th_primary',
+};
+
 const styleObject = computed(() => {
   let borderColor = 'th_primary';
 
-  switch (props.itemName) {
-    case GameItem.Scissors:
-      borderColor = '#EC9E0E';
-      break;
-    case GameItem.Rock:
-      borderColor = '#DC2E4E';
-      break;
-    case GameItem.Lizard:
-      borderColor = '#81A85D';
-      break;
-    case GameItem.Spock:
-      borderColor = '#FF5733';
-      break;
-    default:
-      break;
+  if (props.itemName) {
+    const selectedColor = colorMap[props.itemName];
+    if (selectedColor) borderColor = selectedColor;
   }
 
   const obj: CSSProperties = { borderColor };

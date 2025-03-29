@@ -9,7 +9,7 @@
         <div class="choice-container__body">
           <GameButton
             class="button-component"
-            :class="{ winner: resultOfGame.gameResult === 1 }"
+            :class="{ winner: resultOfGame.gameResult === Result.Win }"
             disabled
             :item-name="resultOfGame.userChoice"
           />
@@ -31,7 +31,7 @@
         <div class="choice-container__body">
           <GameButton
             class="button-component"
-            :class="{ winner: resultOfGame.gameResult === -1 }"
+            :class="{ winner: resultOfGame.gameResult === Result.Loss }"
             disabled
             :item-name="resultOfGame.robotChoice"
           />
@@ -47,7 +47,7 @@ import { computed } from 'vue';
 import GameButton from './GameButton.vue';
 import TheButton from '@/components/ui-kit/TheButton.vue';
 
-import { ResultOfGame } from '../types';
+import { Result, ResultOfGame } from '../types';
 
 const props = defineProps<{
   resultOfGame: ResultOfGame;
@@ -57,25 +57,20 @@ const $emits = defineEmits<{
   resetGame: [];
 }>();
 
-const resultText = computed<string>(() => {
+const resultTextMap = {
+  [Result.Win]: 'Вы\nвыиграли',
+  [Result.Draw]: 'Ничья',
+  [Result.Loss]: 'Вы\nпроиграли',
+};
+
+const resultText = computed(() => {
   const { gameResult } = props.resultOfGame;
 
-  let text = 'Что-то пошло не так';
-  switch (gameResult) {
-    case 1:
-      text = 'Вы\nвыиграли';
-      break;
-    case 0:
-      text = 'Ничья';
-      break;
-    case -1:
-      text = 'Вы\nпроиграли';
-      break;
-    default:
-      break;
-  }
+  const errorText = 'Что-то пошло не так';
 
-  return text;
+  const text = gameResult ? resultTextMap[gameResult] : null;
+
+  return text ?? errorText;
 });
 </script>
 

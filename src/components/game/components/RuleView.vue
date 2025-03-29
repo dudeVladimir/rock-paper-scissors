@@ -31,11 +31,11 @@ const $emits = defineEmits<{
   close: [];
 }>();
 
-const headerText = computed<string>(() =>
+const headerText = computed(() =>
   isBonusGame.value ? 'Правила бонусной игры' : 'Правила',
 );
 
-const imgUrl = computed<string>(() =>
+const imgUrl = computed(() =>
   isBonusGame.value ? './image-rules-bonus.svg' : './image-rules.svg',
 );
 </script>

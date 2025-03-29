@@ -1,27 +1,17 @@
 <template>
   <div class="app-container">
-    <TheHeader
-      class="app-header"
-      :counter="counter"
-    />
+    <TheHeader class="app-header" :counter="counter" />
     <main class="app-content">
       <transition name="scale-zero">
-        <RuleView
-          v-if="isRuleView"
-          @close="ruleHandler(false)"
-        />
-        <TheGame
-          v-else
-          class="game-container"
-          @set-result="setResult"
-        />
+        <RuleView v-if="isRuleView" @close="ruleHandler(false)" />
+        <TheGame v-else class="game-container" @set-result="setResult" />
       </transition>
     </main>
     <footer class="app-footer">
       <div class="buttons">
-        <TheButton uppercase font-size="16px" @click="bonusHandler">{{
-          isBonusGame ? 'Обычный' : 'Бонус'
-        }}</TheButton>
+        <TheButton uppercase font-size="16px" @click="bonusHandler">
+          {{ isBonusGame ? 'Обычный' : 'Бонус' }}
+        </TheButton>
         <TheButton
           v-if="!isRuleView"
           uppercase

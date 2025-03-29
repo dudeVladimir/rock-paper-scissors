@@ -5,22 +5,25 @@
       class="game-wrapper"
       :class="{ 'bonus-game': isBonusGame }"
     >
-        <ul class="game-wrapper__content">
-          <img
-            :src="isBonusGame ? 'bg-pentagon.svg' : 'bg-triangle.svg'"
-            alt="background"
-            height="330px"
+      <ul class="game-wrapper__content">
+        <img
+          :src="isBonusGame ? 'bg-pentagon.svg' : 'bg-triangle.svg'"
+          alt="background"
+          height="330px"
+        />
+        <li
+          v-for="(button, index) in buttonsArr"
+          :key="index"
+          class="button-item"
+          :class="`button-item_${button}`"
+        >
+          <GameButton
+            :item-name="button"
+            @click="$emits('selectItem', button)"
           />
-          <li
-            v-for="(button, index) in buttonsArr"
-            :key="index"
-            class="button-item"
-            :class="`button-item_${button}`"
-          >
-            <GameButton :item-name="button" @click="$emits('selectItem', button)" />
-          </li>
-        </ul>
-      </div>
+        </li>
+      </ul>
+    </div>
   </transition>
 </template>
 
@@ -30,9 +33,13 @@ import type { GameItem } from '../types';
 import { type Ref, inject, computed } from 'vue';
 import GAME_CONSTANTS from '../constants';
 
-const isBonusGame = inject('isBonusGame') as Ref;
+const isBonusGame = inject('isBonusGame') as Ref<boolean>;
 
-const buttonsArr = computed<GameItem[]>(() => isBonusGame.value ? GAME_CONSTANTS.GAME_ITEMS_ARRAY : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY);
+const buttonsArr = computed(() =>
+  isBonusGame.value
+    ? GAME_CONSTANTS.GAME_ITEMS_ARRAY
+    : GAME_CONSTANTS.DEFAULT_GAME_ITEMS_ARRAY,
+);
 
 const $emits = defineEmits<{
   selectItem: [name: GameItem];
